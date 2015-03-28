@@ -1,0 +1,1 @@
+$redis = Redis.new(:url => "redis://:#{Rails.application.secrets.redis_passwd}@#{Rails.application.secrets.redis_host_with_port}/#{Rails.application.secrets.redis_db}")

@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'https://ruby.taobao.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -43,3 +43,11 @@ group :development, :test do
   gem 'spring'
 end
 
+gem 'api', path: "vendor/engines/api"
+gem 'wx', path: "vendor/engines/wx"
+
+gem "redis", "~> 3.0.1"
+gem "hiredis", "~> 0.4.5"
+
+gem "authlogic"
+gem 'kaminari'
