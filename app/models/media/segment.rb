@@ -29,28 +29,6 @@ class Media::Segment < ActiveRecord::Base
         self.class.new.from_json(segment)
     end
 
-    # def save_to_redis
-    #     $redis.zadd(eye_segment_redis_key, self.timestamp, self.to_json)
-    # end
-
-    # def eye_segment_redis_key
-    #     self.class.eye_segment_redis_key(self.eye_id)
-    # end
-
-    # def self.eye_segment_redis_key(eye_id)
-    #     @_eye_segment_redis_key ||= "Eye::#{eye_id}::Segments"
-    # end
-
-    # # 直播时寻找视频片段
-    # def self.segments_live(eye_id, n=1)
-    #     $redis.zrevrangebyscore(eye_segment_redis_key(eye_id), "+inf", "-inf", :limit => [0, n])
-    # end
-
-    # # 回放时寻找视频片段
-    # def self.segments_from(eye_id, ts, n=10)
-    #     $redis.zrevrangebyscore(eye_segment_redis_key(eye_id), "+inf", ts, :limit => [0, n])
-    # end
-
     # 直播时寻找视频片段
     def self.segments_live(eye_id)
         [self.get_current_segment(eye_id)].flatten
