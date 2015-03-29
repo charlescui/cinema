@@ -1,7 +1,7 @@
 class CreateEyes < ActiveRecord::Migration
   def change
     create_table :eyes do |t|
-        t.integer   :seq => 32, :default => 0
+        t.integer   :seq => 16, :default => 0
         # authlogic
         t.string    :login,               :null => false                # 可选，可以用email来代替它，或者同时使用两者。
         t.string    :crypted_password,    :null => false                # 可选，但强烈建议加上。

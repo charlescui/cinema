@@ -1,5 +1,7 @@
 class Eye < ActiveRecord::Base
-    acts_as_authentic
+    acts_as_authentic do |c|
+      c.crypto_provider = Authlogic::CryptoProviders::Sha512
+    end
     has_many :segments, class_name: "Media::Segment"
 
     LIVESEGMENTS = 1 #直播的请求，返回一个最新的视频片段
