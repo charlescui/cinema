@@ -30,6 +30,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'unicorn'
 gem 'dalli'
 
+gem 'mysql2'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -53,3 +55,5 @@ gem "hiredis", "~> 0.4.5"
 gem 'kaminari'
 gem 'scrypt', '~> 1.2.1'
 gem 'authlogic', github: 'binarylogic/authlogic'
+
+gem 'rest-client', '>= 1.6.7'

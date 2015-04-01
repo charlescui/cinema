@@ -89,4 +89,13 @@ DOC
     def self.play_back_tmpl_erb
         @_play_back_tmpl_erb ||= ERB.new(play_back_tmpl)
     end
+
+    def delete_from_aliyun
+        self.class.delete_from_aliyun(self)
+    end
+
+    def self.delete_from_aliyun(i)
+        uri = URI.parse(i.segment)
+        $oss.delete(uri.path)
+    end
 end
