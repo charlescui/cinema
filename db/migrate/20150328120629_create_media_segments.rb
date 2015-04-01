@@ -1,15 +1,16 @@
 class CreateMediaSegments < ActiveRecord::Migration
   def change
     create_table :media_segments do |t|
-        t.integer duration: 32
-        t.string segment: 128
-        t.string comment: 256
-        t.integer byterange_length: 16
-        t.integer byterange_start: 16
-        t.integer timestamp: 16
-        t.integer eye_id: 16
-        t.integer seq: 32
+      t.integer :duration, :default => 0
+      t.string  :segment
+      t.string  :comment
+      t.integer :byterange_length
+      t.integer :byterange_start
+      t.integer :timestamp, :default => 0
+      t.integer :eye_id
+      t.integer :seq, :default => 0
 
+      t.index [:eye_id, :timestamp]
       t.timestamps null: false
     end
   end

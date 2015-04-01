@@ -1,4 +1,7 @@
 class Media::Segment < ActiveRecord::Base
+    include ActiveModel::Serializers::JSON
+    # attr_access :duration, :segment, :comment, :byterange_length, :byterange_start, :timestamp, :eye_id, :seq
+
     belongs_to :eye
     before_save :update_segment_seq
     after_save  :update_current_segment
@@ -8,30 +11,41 @@ class Media::Segment < ActiveRecord::Base
     # 每个片段都与属于自己的序列
     # 而这个序列的计数器则是eye模型中的seq字段
     def update_segment_seq
-        self.seq = self.eye.seq
-        self.eye.seq += 1
-        self.eye.save
+        # 当本片段存在Eye，并且还没有更新过Seq时，执行以下逻辑
+        if self.eye and (!self.seq or (self.seq == 0))
+            self.eye.seq ||= 0
+            self.seq = self.eye.seq
+            self.eye.seq += 1
+            self.eye.save
+        end
     end
 
     def update_current_segment
-        self.class.update_current_segment(self)
+        if !@_has_update_current_segment
+            @_has_update_current_segment = true
+            self.class.update_current_segment(self)
+        end
     end
 
     def self.update_current_segment(segment)
-        Rails.cache.write(CURRENRSEGMENTKEY, segment.to_json)
+        Rails.cache.write("#{CURRENRSEGMENTKEY}::#{segment.eye_id}", segment.as_json)
     end
 
     def self.get_current_segment(eye_id)
-        segment = Rails.cache.fetch(CURRENRSEGMENTKEY){
+        data = Rails.cache.fetch("#{CURRENRSEGMENTKEY}::#{eye_id}", :expires_in => 30){
             s = self.where(:eye_id => eye_id).order("timestamp DESC").limit(1)
-            s and s.to_json
+            s and s.as_json
         }
-        self.class.new.from_json(segment)
+        if data
+            segment = self.find(data["id"])
+        else
+            nil
+        end
     end
 
     # 直播时寻找视频片段
-    def self.segments_live(eye_id)
-        [self.get_current_segment(eye_id)].flatten
+    def self.segments_live(eye_id, n=3)
+        Media::Segment.limit(n).order("created_at DESC").reverse
     end
 
     # 回放时寻找视频片段

@@ -50,6 +50,6 @@ gem 'wx', path: "vendor/engines/wx"
 gem "redis", "~> 3.0.1"
 gem "hiredis", "~> 0.4.5"
 
-gem "authlogic"
-gem 'scrypt'
 gem 'kaminari'
+gem 'scrypt', '~> 1.2.1'
+gem 'authlogic', github: 'binarylogic/authlogic'
