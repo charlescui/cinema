@@ -1,8 +1,18 @@
-<video id="example_video_1" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264" poster="http://video-js.zencoder.com/oceans-clip.png" data-setup='{"example_option":true}'>
+<link href="//vjs.zencdn.net/4.9.0/video-js.css" rel="stylesheet">
+<script src="//vjs.zencdn.net/4.9.0/video.js"></script>
 
-    <source src="/api/v1/eye/live.m3u8?eye_credentials=UsFzScHX7XTSEhiEi71" type='video/mp4'/>
-    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that 
-        <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-    </p>
+<div class="wrapper">
+ <div class="videocontent">
+  <div id="myvideo_videojs1" class="video-js vjs-default-skin vjs-playing vjs-fullscreen vjs-big-play-centered">
+    <video id="example_video_1" class="video-tech" controls preload="auto" poster="http://video-js.zencoder.com/oceans-clip.png" data-setup='{"customControlsOnMobile":true}'>
 
-</video>
+        <source src="/api/v1/eye/live.m3u8?eye_credentials=UsFzScHX7XTSEhiEi71" type='video/mp4'/>
+        <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that 
+            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+        </p>
+
+    </video>
+  </div>
+ </div>
+</div>
+
