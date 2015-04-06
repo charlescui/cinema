@@ -57,3 +57,5 @@ gem 'scrypt', '~> 1.2.1'
 gem 'authlogic', github: 'binarylogic/authlogic'
 
 gem 'rest-client', '>= 1.6.7'
+
+gem 'videojs_rails'

@@ -1,0 +1,11 @@
+<link href="//ongo360.oss-cn-beijing.aliyuncs.com/video-js/4.9.0/video-js.css" rel="stylesheet">
+<script src="//ongo360.oss-cn-beijing.aliyuncs.com/video-js/4.9.0/video.js"></script>
+
+<div class="wrapper">
+ <div class="videocontent">
+    <%= videojs_rails id: "the_video", classes: "video-tech vjs-playing vjs-fullscreen vjs-big-play-centered", sources: { mp4: "/api/v1/eye/live.m3u8?eye_credentials=#{@eye.single_access_token}"}, poster: "http://ongo360.oss-cn-beijing.aliyuncs.com/video-js/4.9.0/oceans-clip.png", setup: '{"customControlsOnMobile":true}' do %>
+        目前支持iOS和Android移动设备观看
+    <%- end %>
+ </div>
+</div>
+
