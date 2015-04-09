@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.version     = Wx::VERSION
   s.authors     = ["cuizheng"]
   s.email       = ["zheng.cuizh@gmail.com"]
-  s.homepage    = "Cinema WX server"
+  s.homepage    = ""
   s.summary     = "Cinema WX server"
   s.description = "Cinema WX server"
   s.license     = "MIT"

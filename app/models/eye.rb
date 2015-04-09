@@ -4,6 +4,9 @@ class Eye < ActiveRecord::Base
     end
     has_many :segments, class_name: "Media::Segment"
 
+    has_many :users, :class_name => "user", :through => :user_eye_ships
+    has_many :user_eye_ships, :class_name => "user_eye_ship"
+
     LIVESEGMENTS = 1 #直播的请求，返回一个最新的视频片段
     PLAYBACKSEGMENTS = 1 * 60 * 60 / 10 #每个回放的请求,限制返回一小时的视频list
 

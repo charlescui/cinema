@@ -19,7 +19,7 @@ module Api
     end
 
     def create
-        if current_eye
+        if current_user and params[:id] and (current_eye = current_user.eyes.where(:id => params[:id]).first)
             segment = current_eye.segments.new
             segment.duration = params[:duration] 
             segment.segment = params[:segment] 

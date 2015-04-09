@@ -14,7 +14,7 @@ module Api
     end
 
     def live
-        if current_eye
+        if current_user and params[:id] and (current_eye = current_user.eyes.where(:id => params[:id]).first)
             render :text => current_eye.live_m3u8
         else
             render_json(status: -1, msg: "no eye found!")
@@ -22,7 +22,7 @@ module Api
     end
 
     def play_back
-        if current_eye
+        if current_user and params[:id] and (current_eye = current_user.eyes.where(:id => params[:id]).first)
             ts = params[:ts] || 1.hour.ago.to_i
             render :text => current_eye.play_back_m3u8(ts)
         else
