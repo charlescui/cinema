@@ -10,5 +10,8 @@ Api::Engine.routes.draw do
         # segment
         post "/segment" => "segment#create"
         get "/segment" => "segment#index"
+
+        # user
+        post "/user/bind" => "user#bind"
     end
 end

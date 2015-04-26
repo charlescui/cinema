@@ -2,6 +2,8 @@ class Eye < ActiveRecord::Base
     acts_as_authentic do |c|
       c.crypto_provider = Authlogic::CryptoProviders::Sha512
     end
+    include Uuidable
+    
     has_many :segments, class_name: "Media::Segment"
 
     has_many :users, :class_name => "user", :through => :user_eye_ships

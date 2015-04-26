@@ -13,7 +13,6 @@ namespace :sample do
         user = User.new(:login => SecureRandom.hex)
         passwd = SecureRandom.hex[0..15]
         user.password = user.password_confirmation = passwd
-        user.email = "#{passwd[0..8]}@ongo360.com"
         user.save
     end
 

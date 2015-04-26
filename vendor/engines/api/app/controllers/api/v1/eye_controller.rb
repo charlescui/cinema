@@ -3,12 +3,24 @@ require_dependency "api/application_controller"
 module Api
   class V1::EyeController < ApplicationController
     def register
+        # 如果没有登录状态
         if !current_eye
-            params.permit!
-            current_eye = Eye.new(params)
-            passwd = SecureRandom.hex[0..15]
-            current_eye.password = current_eye.password_confirmation = passwd
-            current_eye.reset_single_access_token!
+            if (eye_uuid = params[:eye_uuid])
+                if (current_eye = Eye.where(:uuid => eye_uuid).first)
+                    # 如果已注册
+                    # nothing
+                else
+                    # 如果未注册
+                    params.permit!
+                    current_eye = Eye.new(params)
+                    passwd = SecureRandom.hex[0..15]
+                    current_eye.password = current_eye.password_confirmation = passwd
+                    current_eye.reset_single_access_token!
+                end
+            else
+                render_json(:status => -1, :msg => "need eye_uuid params")
+                return
+            end
         end
         render_json(:data => {:token => current_eye.single_access_token})
     end

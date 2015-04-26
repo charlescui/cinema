@@ -2,6 +2,18 @@ require_dependency "wx/application_controller"
 
 module Wx
   class PortalController < ApplicationController
+    def index
+        if current_user and (eye_uuid = params[:eye_uuid])
+            if current_user.eyes.map{|e|e.uuid}.include?(eye_uuid)
+                if !(@eye = Eye.where(:uuid => eye_uuid).first)
+                    render status: :not_found
+                end
+            end
+        else
+            render status: :not_found
+        end
+    end
+
     def live
         
     end

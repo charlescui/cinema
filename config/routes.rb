@@ -7,4 +7,6 @@ Rails.application.routes.draw do
 
   mount Api::Engine => '/api', :as => 'api'
   mount Wx::Engine => '/wx', :as => 'wx'
+  mount WxApi::V1::Server => '/wx_api/v1', :as => 'wx_api_v1'
+
 end

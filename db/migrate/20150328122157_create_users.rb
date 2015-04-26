@@ -2,7 +2,7 @@ class CreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
         t.string    :login,               :null => false                # 可选，可以用email来代替它，或者同时使用两者。
-        t.string    :email,               :null => false                # 可选，可以用login来代替它，或者同时使用两者。
+        t.string    :name,                :null => true
         t.string    :crypted_password,    :null => false                # 可选，但强烈建议加上。
         t.string    :password_salt,       :null => false                # 可选，但强烈建议加上。
         t.string    :persistence_token,   :null => false                # 必选
