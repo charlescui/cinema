@@ -125,13 +125,6 @@ module WxApi::V1::WechatController
                 end
             end
 
-            # 打开网页版
-            def handle_wechat_text_wy(xml)
-                xml["xml"]["Content"] = "#{request.scheme}://#{request.host_with_port}/wx/portal/demo?user_credentials=kjpmdxnO2xSRQWhiYVXY&eye_id=1"
-                #generate out put response with @xml and template
-                TEXT_TEMPLATE.result(binding)
-            end
-
             # 帮助说明文案
             def handle_wechat_text_help(xml)
                 xml["xml"]["Content"] = help_text
@@ -139,33 +132,7 @@ module WxApi::V1::WechatController
                 TEXT_TEMPLATE.result(binding)
             end
 
-            # 绑定页面入口
-            def handle_wechat_text_bind_entry(xml)
-                xml["xml"]["Content"] = bind_text
-                #generate out put response with @xml and template
-                TEXT_TEMPLATE.result(binding)
-            end
-
             def handle_wechat_text(xml)
-                # 先通过文字匹配条件来检测一遍
-                # 如果匹配，直接返回文案
-                WxPatternText.all.each do |x|
-                    if x.pattern == xml["xml"]["Content"]
-                        xml["xml"]["Content"] = x.content
-                        return TEXT_TEMPLATE.result(binding)
-                    end
-                end
-
-                # 先通过正则匹配条件来检测一遍
-                # 如果匹配，直接返回文案
-                WxPatternRegular.all.each do |x|
-                    reg = Regexp.new(x.pattern, 'i')
-                    if reg.match(xml["xml"]["Content"])
-                        xml["xml"]["Content"] = x.content
-                        return TEXT_TEMPLATE.result(binding)
-                    end
-                end
-
                 case xml["xml"]["Content"]
                 when /^(help)$/i, /^帮助$/
                     handle_wechat_text_help(xml)
@@ -178,10 +145,6 @@ module WxApi::V1::WechatController
                 end
             end
 
-            def bind_text
-                "<a href='#{request.scheme}://#{request.host_with_port}/wx/bind_ui?user_credentials=#{current_user.single_access_token}'>点此看教程并绑定机顶盒</a>"
-            end
-
             def help_text
                 <<-HELP
 随时听候您的吩咐，
@@ -190,6 +153,9 @@ module WxApi::V1::WechatController
 祝您使用愉快！
 
 需要观看演示，请点击此处：
+<a href='#{request.scheme}://#{request.host_with_port}/wx/portal/demo?user_credentials=#{current_user(@xml).single_access_token}&eye_id=1'>演示地址</a>
+
+需要进入开发环境，请点击此处：
 <a href='#{request.scheme}://#{request.host_with_port}/wx/portal/demo?user_credentials=#{current_user(@xml).single_access_token}&eye_id=1'>演示地址</a>
                 HELP
             end
@@ -214,6 +180,11 @@ module WxApi::V1::WechatController
                 when 'CLICK'
                     
                 end
+            end
+
+            def handle_wechat_text_media_info(xml, word=nil)
+                xml["xml"]["Content"] = help_text
+                return TEXT_TEMPLATE.result(binding)
             end
 
         end
