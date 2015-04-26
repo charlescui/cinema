@@ -52,11 +52,11 @@ module WxApi::V1::WechatController
         #1.perform sanity check on Get request
         #2.receive and process user data on Post request
 
-        app.get '/v1/wechat' do
+        app.get '/wechat' do
             check_signature
         end
 
-        app.post '/v1/wechat' do
+        app.post '/wechat' do
             str = request.body.read
             @xml = Hash.from_xml(str)
             #set current_user first
@@ -69,7 +69,7 @@ module WxApi::V1::WechatController
         app.helpers do
             #validate this visit
             def check_signature 
-                token = Rails.application.secrets.wx_app_secret || "6404613efcc69d09a89dd10aeec92a97"
+                token = Rails.application.secrets.wx_app_token
                 signature = params[:signature]
                 timestamp = params[:timestamp]
                 nonce = params[:nonce]
@@ -190,7 +190,7 @@ module WxApi::V1::WechatController
 祝您使用愉快！
 
 需要观看演示，请点击此处：
-<a href='#{request.scheme}://#{request.host_with_port}/wx/portal/demo?user_credentials=kjpmdxnO2xSRQWhiYVXY&eye_id=1'>演示地址</a>
+<a href='#{request.scheme}://#{request.host_with_port}/wx/portal/demo?user_credentials=#{current_user(@xml).single_access_token}&eye_id=1'>演示地址</a>
                 HELP
             end
 
