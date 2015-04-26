@@ -60,4 +60,3 @@ gem 'rest-client', '>= 1.6.7'
 
 gem 'videojs_rails'
 gem 'sinatra'
-gem 'uuidtools'

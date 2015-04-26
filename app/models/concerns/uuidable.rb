@@ -7,7 +7,7 @@ module Uuidable
   end
 
   def before_create_generate_uuid
-    self.uuid = UUID.timestamp_create().to_s
+    self.uuid = SecureRandom.uuid
   end
 
   # methods defined here are going to extend the class, not the instance of it
