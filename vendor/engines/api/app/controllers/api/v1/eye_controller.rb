@@ -26,7 +26,7 @@ module Api
     end
 
     def live
-        if current_user and params[:id] and (current_eye = current_user.eyes.where(:id => params[:id]).first)
+        if current_eye
             render :text => current_eye.live_m3u8
         else
             render_json(status: -1, msg: "no eye found!")

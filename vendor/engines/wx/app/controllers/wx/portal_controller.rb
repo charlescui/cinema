@@ -28,6 +28,7 @@ module Wx
         else
             render status: :not_found
         end
+	Rails.logger.info("Eye debug info : #{@eye.inspect}")
     end
   end
 end
