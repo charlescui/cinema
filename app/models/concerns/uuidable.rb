@@ -2,7 +2,7 @@ module Uuidable
   extend ActiveSupport::Concern
 
   included do
-#    class_attribute :uuid
+    class_attribute :uuid
     before_create :before_create_generate_uuid
   end
 
